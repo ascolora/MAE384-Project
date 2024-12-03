@@ -70,6 +70,16 @@ legend;
 grid on;
 hold off;
 
+%% Part 3
+h = 1;
+t_30 = 1:30;
+t_30 = t_30(:);
+t_10 = 1:10;
+t_10 = t_10(:);
+%True Value for I(t)
+[~, I_t, ~] = runge_kutta_SIR(beta_seasonal, gamma_seasonal, S0, I0, R0, h, 0:h:30, N);
+
+
 % Function to perform Runge-Kutta 4th Order Method
 function [S, I, R] = runge_kutta_SIR(beta, gamma, S0, I0, R0, h, t, N)
     % Initialize arrays
