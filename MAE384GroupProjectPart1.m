@@ -1,12 +1,16 @@
 % Main script
 
 % Parameters for Seasonal Influenza
-beta_seasonal = 1.3;
-gamma_seasonal = 0.3;
+beta_seasonal = 0.3;
+gamma_seasonal = 0.1;
 
 % Parameters for COVID-19
-beta_covid = 1.9;
+beta_covid = 1.0;
 gamma_covid = 0.1;
+
+% Parameters for Measles
+beta_measles = 2;
+gamma_measles = 0.2;
 
 % Time settings
 h = 1; % Time step (days)
@@ -23,6 +27,9 @@ N = S0 + I0 + R0; % Total population
 
 % Simulate for COVID-19
 [S_covid, I_covid, R_covid] = runge_kutta_SIR(beta_covid, gamma_covid, S0, I0, R0, h, t, N);
+
+% Simulate for Measles
+[S_measles, I_measles, R_measles] = runge_kutta_SIR(beta_measles, gamma_measles, S0, I0, R0, h, t, N);
 
 % Plot results for Seasonal Influenza
 figure;
@@ -46,6 +53,19 @@ plot(t, R_covid, 'g-', 'DisplayName', 'R(t)');
 xlabel('Time (days)');
 ylabel('Population');
 title('COVID-19: SIR Model using Runge-Kutta 4th Order Method');
+legend;
+grid on;
+hold off;
+
+% Plot results for Measles
+figure;
+hold on;
+plot(t, S_measles, 'b-', 'DisplayName', 'S(t)');
+plot(t, I_measles, 'r-', 'DisplayName', 'I(t)');
+plot(t, R_measles, 'g-', 'DisplayName', 'R(t)');
+xlabel('Time (days)');
+ylabel('Population');
+title('Measles: SIR Model using Runge-Kutta 4th Order Method');
 legend;
 grid on;
 hold off;
@@ -88,3 +108,9 @@ function [S, I, R] = runge_kutta_SIR(beta, gamma, S0, I0, R0, h, t, N)
         R(i+1) = R(i) + (1/6) * (k1_R + 2*k2_R + 2*k3_R + k4_R) * h;
     end
 end
+
+%the parameters show that measles is the most infectious disease as 2 is
+%greater than 1. Also on the graph more people are infected within a
+%shorter time period. Eventhought measles is the most infectious, people
+%are more susceptible for a longer period of time with the seasonal flu. To
+%add, measles has the higher number of recovery rates than the rest.
