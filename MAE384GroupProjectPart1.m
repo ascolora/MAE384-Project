@@ -78,6 +78,14 @@ t_10 = 1:10;
 t_10 = t_10(:);
 %True Value for I(t)
 [~, I_t, ~] = runge_kutta_SIR(beta_seasonal, gamma_seasonal, S0, I0, R0, h, 0:h:30, N);
+ln_I30 = log(I_t(2:end));
+ln_I30 = ln_I30(:);
+ln_I10 = ln_I(1:10);
+
+%30 days
+x_30 = [ones(length(t_30),1), t_30]
+coeffs30 = x_30\ln_I30;
+
 
 
 % Function to perform Runge-Kutta 4th Order Method
