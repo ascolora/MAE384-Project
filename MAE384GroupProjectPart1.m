@@ -85,6 +85,17 @@ ln_I10 = ln_I(1:10);
 %30 days
 x_30 = [ones(length(t_30),1), t_30]
 coeffs30 = x_30\ln_I30;
+ln_I0_30 = coeffs30(1);
+k_30 = coeffs30(2);     
+I0_est_30 = exp(ln_I0_30); 
+beta_est_30 = (k_30 + gamma_seasonal) * N / S0; 
+%10 days 
+X_10 = [ones(length(t_10), 1), t_10]; 
+coeffs_10 = X_10 \ ln_I10; 
+ln_I0_10 = coeffs_10(1); 
+k_10 = coeffs_10(2);    
+I0_est_10 = exp(ln_I0_10); 
+beta_est_10 = (k_10 + gamma_seasonal) * N / S0; 
 
 
 
