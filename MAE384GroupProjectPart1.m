@@ -70,39 +70,6 @@ legend;
 grid on;
 hold off;
 
-%% Part 3
-h = 1;
-t_30 = 1:30;
-t_30 = t_30(:);
-t_10 = 1:10;
-t_10 = t_10(:);
-%True Value for I(t)
-[~, I_t, ~] = runge_kutta_SIR(beta_seasonal, gamma_seasonal, S0, I0, R0, h, 0:h:30, N);
-ln_I30 = log(I_t(2:end));
-ln_I30 = ln_I30(:);
-ln_I10 = ln_I(1:10);
-%30 days
-x_30 = [ones(length(t_30),1), t_30]
-coeffs30 = x_30\ln_I30;
-ln_I0_30 = coeffs30(1);
-k_30 = coeffs30(2);     
-I0_est_30 = exp(ln_I0_30); 
-beta_est_30 = (k_30 + gamma_seasonal) * N / S0; 
-%10 days 
-X_10 = [ones(length(t_10), 1), t_10]; 
-coeffs_10 = X_10 \ ln_I10; 
-ln_I0_10 = coeffs_10(1); 
-k_10 = coeffs_10(2);    
-I0_est_10 = exp(ln_I0_10); 
-beta_est_10 = (k_10 + gamma_seasonal) * N / S0; 
-%Displaying Results
-fprintf('30 days of data:\n');
-fprintf('Estimated I(0): %.2f\n', I0_est_30);
-fprintf('Estimated beta: %.4f\n', beta_est_30);
-fprintf('\n 10 days of data:\n');
-fprintf('Estimated I(0): %.2f\n', I0_est_10);
-fprintf('Estimated beta: %.4f\n', beta_est_10);
-%%%The estimates of I(t) and B improved compared to the true parameters since assumptions made the SIR model match with real-world epidemics. Since the data was altered into a logarithmic scale, the exponential growth was linearized which allows for the intercept (I(t)) and slope(B) to be accurate. 
 
 
 % Function to perform Runge-Kutta 4th Order Method
